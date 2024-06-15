@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Robotic Arm</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        * {
+          font-family: "Poppins", sans-serif;
+        }
+  
+        .gradient {
+          background-image: linear-gradient(93deg, rgba(0,118,204,1) 0%, rgba(50,181,255,1) 64%);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+        }
+
+        html {
+            height: 100%;
+            position: relative;
+        }
+    </style>
+
+</head>
+<body class="h-full relative">
+    
+    <div id="root2" class="h-full relative md:flex md:justify-center md:bg-slate-100">
+
+        <div class='h-full relative grid grid-rows-[1fr_auto] md:w-[650px] md:bg-white overflow-hidden'>
+            <main class='h-full flex flex-col'>
+
+                <header class='flex items-center justify-center gap-4 pt-10 pb-5'>
+                    <img src="src/img/logo.svg" alt="logo de robotic arm" />
+                    <h1 class='font-bold text-2xl gradient'>RoboticArm</h1>
+                </header>
+
+                <section class='px-9 py-8 flex flex-col gap-5 h-full'>
+
+                    <div class='flex justify-center items-center h-full'>
+                        <div class='relative flex flex-col gap-11 h-full justify-center'>
+                            <button id="btnMovUp"
+                                class="rounded-full bg-[#4678FB] w-[70px] h-[70px] flex justify-center items-center shadow-[3px_3px_0_#D7D7D7] cursor-pointer active:shadow-none active:bg-[#355BBF] select-none">
+                                <img src="src/img/icon-arrow.svg" alt="icon arrow" class="rotate-[0deg] select-none" />
+                            </button>
+
+                            <button id="btnMovLeft"
+                                class="absolute rounded-full bg-[#32B5FF] w-[70px] h-[70px] flex justify-center items-center shadow-[3px_3px_0_#D7D7D7] cursor-pointer active:shadow-none active:bg-[#2183BA] select-none translate-x-[70px]">
+                                <img src="src/img/icon-arrow.svg" alt="icon arrow" class="rotate-[90deg] select-none" />
+                            </button>
+
+                            <button id="btnMovDown"
+                                class="rounded-full bg-[#4678FB] w-[70px] h-[70px] flex justify-center items-center shadow-[3px_3px_0_#D7D7D7] cursor-pointer active:shadow-none active:bg-[#355BBF] select-none">
+                                <img src="src/img/icon-arrow.svg" alt="icon arrow" class="rotate-[180deg] select-none" />
+                            </button>
+
+                            <button id="btnMovRight"
+                                class="absolute rounded-full bg-[#32B5FF] w-[70px] h-[70px] flex justify-center items-center shadow-[3px_3px_0_#D7D7D7] cursor-pointer active:shadow-none active:bg-[#2183BA] select-none -translate-x-[70px]">
+                                <img src="src/img/icon-arrow.svg" alt="icon arrow" class="rotate-[270deg] select-none" />
+                            </button>
+
+                        </div>
+                    </div>
+                </section>
+            </main>
+            
+
+            <nav class='shadow-[0_2px_15px_rgba(188,188,188,1)] relative z-10 bg-white flex justify-center items-center'>
+                <ul class='grid grid-cols-2 items-center w-full'>
+                  <li class=''>
+                    <a href="index.html" class='py-5 flex justify-center items-center'>
+                      <button class="flex flex-col items-center justify-center gap-2 hover:scale-110 duration-300">
+                        <img src="src/img/icon-arm.svg" alt="icon" />
+                        <p class='text-sm font-medium'>Articulaciones</p>
+                      </button>
+                    </a>
+                  </li>
+          
+                  <li class=''>
+                    <a href="movimiento.html" class='py-5 flex justify-center items-center'>
+                      <button class="flex flex-col items-center justify-center gap-2 hover:scale-110 duration-300">
+                        <img src="src/img/icon-car-active.svg" alt="icon" />
+                        <p class='text-sm text-[#4678FB] font-semibold'>Movimiento</p>
+                      </button>
+                    </a>
+                  </li>
+                </ul>
+            </nav>
+              
+        </div>
+
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="src/js/script.js"></script>
+
+</body>
+</html>

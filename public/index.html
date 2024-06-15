@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="./src/img/logo.svg" />
+  <title>Robotic Arm</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+  
+  <!--
+    <style>
+        body { margin: 0; padding-bottom: 3rem; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+  
+        #form { background: rgba(0, 0, 0, 0.15); padding: 0.25rem; position: fixed; bottom: 0; left: 0; right: 0; display: flex; height: 3rem; box-sizing: border-box; backdrop-filter: blur(10px); }
+        #input { border: none; padding: 0 1rem; flex-grow: 1; border-radius: 2rem; margin: 0.25rem; }
+        #input:focus { outline: none; }
+        #form > button { background: #333; border: none; padding: 0 1rem; margin: 0.25rem; border-radius: 3px; outline: none; color: #fff; }
+  
+        #messages { list-style-type: none; margin: 0; padding: 0; }
+        #messages > li { padding: 0.5rem 1rem; }
+        #messages > li:nth-child(odd) { background: #efefef; }
+    </style>
+    -->
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    * {
+      font-family: "Poppins", sans-serif;
+    }
+
+    html {
+      height: 100%;
+      position: relative;
+    }
+
+    .gradient {
+      background-image: linear-gradient(93deg, rgba(0,118,204,1) 0%, rgba(50,181,255,1) 64%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .inputVertical {
+      writing-mode: vertical-lr;
+      appearance: none; 
+      -webkit-appearance: none; /* Quita el estilo predeterminado de WebKit */
+      width: 12px;
+      height: 320px; /* Grosor de la barra */
+      background: #9FDCFF; /* Color de fondo de la barra */
+      border-radius: 20px; /* Radio de borde para la barra */
+    }
+
+    .inputVertical::-webkit-slider-runnable-track {
+      width: 12px;
+      height: 350px; /* Grosor de la barra */
+      background: #9FDCFF; /* Color de fondo de la barra */
+      border-radius: 20px; /* Radio de borde para la barra */
+    }
+
+    /* Pseudo-elemento que representa el control deslizante */
+    .inputVertical::-webkit-slider-thumb {
+      -webkit-appearance: none; /* Quita el estilo predeterminado de WebKit */
+      appearance: none;
+      width: 20px; /* Ancho del control deslizante */
+      height: 20px; /* Altura del control deslizante */
+      background: #32B5FF; /* Color del control deslizante */
+      border-radius: 50%; /* Hace que el control deslizante sea redondo */
+      margin-left: -4px;
+    }
+
+    /* !  */
+    .inputHorizontal {
+      -webkit-appearance: none; /* Quita el estilo predeterminado de WebKit */
+      appearance: none;
+      height: 12px; /* Grosor de la barra */
+      background: #9BB7FF; /* Color de fondo de la barra */
+      border-radius: 20px; /* Radio de borde para la barra */
+    }
+
+    .inputHorizontal::-webkit-slider-runnable-track {
+      height: 12px; /* Grosor de la barra */
+      background: #9BB7FF; /* Color de fondo de la barra */
+      border-radius: 20px; /* Radio de borde para la barra */
+    }
+
+    /* Pseudo-elemento que representa el control deslizante */
+    .inputHorizontal::-webkit-slider-thumb {
+      -webkit-appearance: none; /* Quita el estilo predeterminado de WebKit */
+      appearance: none;
+      width: 20px; /* Ancho del control deslizante */
+      height: 20px; /* Altura del control deslizante */
+      background: #4678FB; /* Color del control deslizante */
+      border-radius: 50%; /* Hace que el control deslizante sea redondo */
+      margin-top: -4px;
+    }
+
+    .scroll::-webkit-scrollbar {
+      width: 8px;
+      background: transparent;
+      overflow: hidden;
+    }
+    .scroll::-webkit-scrollbar-thumb {
+      background: #C6C6C6;
+      border-radius: 8px;
+    }
+
+  </style>
+
+
+</head>
+
+<body class="h-full relative">
+  <!--
+    <ul id="messages"></ul>
+    <form id="form" action="">
+      <input id="input" autocomplete="off" /><button>Send</button>
+    </form>
+    -->
+
+  <div id="root" class="h-full relative md:flex md:justify-center md:bg-slate-100">
+    <div class='h-full relative grid grid-rows-[88%_12%] md:w-[650px] md:bg-white overflow-hidden'>
+      <main class='h-full overflow-y-auto scroll'>
+  
+        <header class='flex items-center justify-center gap-4 pt-10 pb-5'>
+          <img src="src/img/logo.svg" alt="logo de robotic arm" />
+          <h1 class='font-bold text-2xl gradient'>RoboticArm</h1>
+        </header>
+
+        <section class='px-9 py-8 flex flex-col gap-5'>
+          <h2 class='font-semibold'>Garra</h2>
+          <div class='flex justify-center items-center'>
+            <div class='flex flex-col justify-center items-center gap-2'>
+              <p class="texto">Cerrado</p>
+              <button class="toggleOpen bg-[#C6C6C6] rounded-[20px] w-11 h-[24px] relative transition-colors"  data-socket="garra">
+                <div class="rounded-full w-[18px] h-[18px] bg-white absolute top-[3px] transition-all left-[3px]"></div>
+              </button>
+          </div>
+          </div>
+        </section>
+
+        <section class='px-9 py-8 flex flex-col gap-5'>
+          <h2 class='font-semibold'>Brazo</h2>
+          <div class='flex justify-center items-center'>
+            <div class='relative'>
+              <div class='flex flex-col items-center justify-center gap-1 text-sm'>
+                <p>0°</p>
+                <div class='relative'>
+                  <span class='span text-[#32B5FF] font-bold text-sm text-center absolute top-[50%] left-[-45px] -translate-y-2/4 duration-200 select-none'>
+                    
+                  </span>
+                  <input type="range" min="0" max="180" step="10" class='inputVertical' data-socket="range_brazo"/>
+                </div>
+                <p>180°</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class='px-9 py-8 flex flex-col gap-5'>
+          <h2 class='font-semibold'>Cuerpo</h2>
+          <div class='flex justify-center items-center'>
+            <div class='relative'>
+              <div class='flex flex-col items-center justify-center gap-1 text-sm'>
+                <p>0°</p>
+                <div class='relative'>
+                  <span class='span text-[#32B5FF] font-bold text-sm text-center absolute top-[50%] left-[-45px] -translate-y-2/4 duration-200 select-none'>
+                    
+                  </span>
+                  <input type="range" min="0" max="180" step="10" class='inputVertical' data-socket="range_cuerpo"/>
+                </div>
+                <p>180°</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class='px-9 py-8 flex flex-col gap-5'>
+          <h2 class='font-semibold'>Base</h2>
+          <div class='flex justify-center items-center'>
+            <div class='relative pt-8 w-full'>
+              <span
+                class='span text-[#4678FB] font-bold text-sm text-center absolute top-0 left-[50%] -translate-x-2/4 duration-200 select-none'>
+                
+              </span>
+          
+              <div class='flex flex-col gap-2'>
+                <input type="range" min="0" max="180" step="10" class='inputHorizontal' data-socket="range_base"/>
+                <div class='flex justify-between text-sm'>
+                  <p>0°</p>
+                  <p>180°</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+  
+      </main>
+
+      <nav class='shadow-[0_2px_15px_rgba(188,188,188,1)] relative z-10 bg-white flex justify-center items-center'>
+        <ul class='grid grid-cols-2 items-center w-full'>
+          <li class=''>
+            <a href="index.html" class='py-5 flex justify-center items-center'>
+              <button class="flex flex-col items-center justify-center gap-2 hover:scale-110 duration-300">
+                <img src="src/img/icon-arm-active.svg" alt="icon" />
+                <p class='text-sm text-[#4678FB] font-semibold'>Articulaciones</p>
+              </button>
+            </a>
+          </li>
+  
+          <li class=''>
+            <a href="movimiento.html" class='py-5 flex justify-center items-center'>
+              <button class="flex flex-col items-center justify-center gap-2 hover:scale-110 duration-300">
+                <img src="src/img/icon-car.svg" alt="icon" />
+                <p class='text-sm font-medium'>Movimiento</p>
+              </button>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="src/js/script.js"></script>
+
+</body>
+
+</html>
