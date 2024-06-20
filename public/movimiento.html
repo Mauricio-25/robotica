@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg+xml" href="./src/img/logo.svg" />
     <title>Robotic Arm</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -39,6 +40,8 @@
                 <header class='flex items-center justify-center gap-4 pt-10 pb-5'>
                     <img src="src/img/logo.svg" alt="logo de robotic arm" />
                     <h1 class='font-bold text-2xl gradient'>RoboticArm</h1>
+
+                    <img src="src/img/icon-on-off.svg" id="conectar" alt="boton" class="shadow-md p-2 rounded-full cursor-pointer hover:bg-slate-100 duration-300 -translate-y-[15%]">
                 </header>
 
                 <section class='px-9 py-8 flex flex-col gap-5 h-full'>
@@ -46,23 +49,23 @@
                     <div class='flex justify-center items-center h-full'>
                         <div class='relative flex flex-col gap-11 h-full justify-center'>
                             <button id="btnMovUp"
-                                class="rounded-full bg-[#4678FB] w-[70px] h-[70px] flex justify-center items-center shadow-[3px_3px_0_#D7D7D7] cursor-pointer active:shadow-none active:bg-[#355BBF] select-none">
-                                <img src="src/img/icon-arrow.svg" alt="icon arrow" class="rotate-[0deg] select-none" />
+                                class="touch-none rounded-full bg-[#4678FB] w-[70px] h-[70px] flex justify-center items-center shadow-[3px_3px_0_#D7D7D7] cursor-pointer active:shadow-none active:bg-[#355BBF] select-none">
+                                <img src="src/img/icon-arrow.svg" alt="icon arrow" class="touch-none rotate-[0deg] select-none pointer-events-none" />
                             </button>
 
                             <button id="btnMovLeft"
-                                class="absolute rounded-full bg-[#32B5FF] w-[70px] h-[70px] flex justify-center items-center shadow-[3px_3px_0_#D7D7D7] cursor-pointer active:shadow-none active:bg-[#2183BA] select-none translate-x-[70px]">
-                                <img src="src/img/icon-arrow.svg" alt="icon arrow" class="rotate-[90deg] select-none" />
+                                class="touch-none absolute rounded-full bg-[#32B5FF] w-[70px] h-[70px] flex justify-center items-center shadow-[3px_3px_0_#D7D7D7] cursor-pointer active:shadow-none active:bg-[#2183BA] select-none translate-x-[70px]">
+                                <img src="src/img/icon-arrow.svg" alt="icon arrow" class="touch-none rotate-[90deg] select-none pointer-events-none" />
                             </button>
 
                             <button id="btnMovDown"
-                                class="rounded-full bg-[#4678FB] w-[70px] h-[70px] flex justify-center items-center shadow-[3px_3px_0_#D7D7D7] cursor-pointer active:shadow-none active:bg-[#355BBF] select-none">
-                                <img src="src/img/icon-arrow.svg" alt="icon arrow" class="rotate-[180deg] select-none" />
+                                class="touch-none rounded-full bg-[#4678FB] w-[70px] h-[70px] flex justify-center items-center shadow-[3px_3px_0_#D7D7D7] cursor-pointer active:shadow-none active:bg-[#355BBF] select-none">
+                                <img src="src/img/icon-arrow.svg" alt="icon arrow" class="touch-none rotate-[180deg] select-none pointer-events-none" />
                             </button>
 
                             <button id="btnMovRight"
-                                class="absolute rounded-full bg-[#32B5FF] w-[70px] h-[70px] flex justify-center items-center shadow-[3px_3px_0_#D7D7D7] cursor-pointer active:shadow-none active:bg-[#2183BA] select-none -translate-x-[70px]">
-                                <img src="src/img/icon-arrow.svg" alt="icon arrow" class="rotate-[270deg] select-none" />
+                                class="touch-none absolute rounded-full bg-[#32B5FF] w-[70px] h-[70px] flex justify-center items-center shadow-[3px_3px_0_#D7D7D7] cursor-pointer active:shadow-none active:bg-[#2183BA] select-none -translate-x-[70px]">
+                                <img src="src/img/icon-arrow.svg" alt="icon arrow" class="touch-none rotate-[270deg] select-none pointer-events-none" />
                             </button>
 
                         </div>

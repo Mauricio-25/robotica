@@ -23,6 +23,95 @@ socket.on("chat message", (msg) => {
 });
 
 */
+  // ! CORREGIR EL MOVER LA PANTALLA CON LOS INPUTS
+
+  const rangeInputs = document.querySelectorAll('input[type="range"]');
+
+  if(rangeInputs) {
+    rangeInputs.forEach(input => {
+      input.addEventListener('mousedown', disableScroll);
+      input.addEventListener('mouseup', enableScroll);
+      input.addEventListener('touchstart', disableScroll, { passive: true });
+      input.addEventListener('touchend', enableScroll, { passive: true });
+    });
+  }
+
+  function disableScroll() {
+    document.querySelector("main").classList.remove('overflow-y-auto');
+    document.querySelector("main").classList.add('overflow-hidden');
+    document.querySelector("main").classList.add('pr-2');
+  }
+
+  function enableScroll() {
+    document.querySelector("main").classList.add('overflow-y-auto');
+    document.querySelector("main").classList.remove('overflow-hidden');
+    document.querySelector("main").classList.remove('pr-2');
+  }
+
+  // ! Prevent pull-to-refresh
+  let startY = null;
+
+  function handleInput(input) {
+    // Check if the input is at its top or bottom limit
+    if ((input.value == input.min && startY < input.getBoundingClientRect().top) ||
+        (input.value == input.max && startY > input.getBoundingClientRect().bottom)) {
+      input.style.touchAction = 'auto'; // Allow vertical scroll
+    } else {
+      input.style.touchAction = 'none'; // Disable vertical scroll
+    }
+  }
+
+  document.addEventListener('touchstart', (event) => {
+    startY = event.touches[0].clientY; // Store the initial touch position
+  });
+
+  document.addEventListener('touchmove', (event) => {
+    if (startY !== null) {
+      let input = document.querySelector('.inputVertical');
+      if (input) {
+        handleInput(input); // Check if input is at its limit
+      }
+    }
+  });
+
+  document.addEventListener('touchend', () => {
+    startY = null; // Reset the initial touch position
+    let input = document.querySelector('.inputVertical');
+    if (input) {
+      input.style.touchAction = 'none'; // Reset touch action
+    }
+  });
+
+
+  // ! CORREGIR LOS TOUCH DE LAS IMAGENES DE MOVIMIENTO
+
+  // Obtener las imágenes dentro de los botones
+  const btnMovUpImg = document.querySelector('#btnMovUp img');
+  const btnMovLeftImg = document.querySelector('#btnMovLeft img');
+  const btnMovDownImg = document.querySelector('#btnMovDown img');
+  const btnMovRightImg = document.querySelector('#btnMovRight img');
+
+  // Evitar la selección de la imagen en dispositivos táctiles
+  if(btnMovUpImg) {
+    btnMovUpImg.addEventListener('touchstart', (event) => {
+      event.preventDefault(); // Evitar la acción táctil predeterminada
+    });
+  }
+  if(btnMovLeftImg) {
+    btnMovLeftImg.addEventListener('touchstart', (event) => {
+      event.preventDefault(); // Evitar la acción táctil predeterminada
+    });
+  }
+  if(btnMovDownImg) {
+    btnMovDownImg.addEventListener('touchstart', (event) => {
+      event.preventDefault(); // Evitar la acción táctil predeterminada
+    });
+  }
+  if(btnMovRightImg) {
+    btnMovRightImg.addEventListener('touchstart', (event) => {
+      event.preventDefault(); // Evitar la acción táctil predeterminada
+    });
+  }
 
   // ! SELECCIONAR ELEMENTOS DEL DOM
 
@@ -98,28 +187,65 @@ socket.on("chat message", (msg) => {
 
   socket.on("mover", (direction) => {
     if (direction == "up") {
-      btnMovUp.style.background = `#355BBF`;
+      btnMovUp.classList.add("bg-[#355BBF]");
+      btnMovUp.classList.remove("bg-[#4678FB]")
+
+      btnMovUp.classList.remove("shadow-[3px_3px_0_#D7D7D7]")
+      btnMovUp.classList.add("shadow-none")
     }
 
     if (direction == "left") {
-      btnMovLeft.style.background = `#2183BA`;
+      btnMovLeft.classList.add("bg-[#2183BA]");
+      btnMovLeft.classList.remove("bg-[#32B5FF]");
+
+      btnMovLeft.classList.remove("shadow-[3px_3px_0_#D7D7D7]")
+      btnMovLeft.classList.add("shadow-none")
     }
 
     if (direction == "down") {
-      btnMovDown.style.background = `#355BBF`;
+      btnMovDown.classList.add("bg-[#355BBF]")
+      btnMovDown.classList.remove("bg-[#4678FB]")
+
+      btnMovDown.classList.remove("shadow-[3px_3px_0_#D7D7D7]")
+      btnMovDown.classList.add("shadow-none")
     }
 
     if (direction == "right") {
-      btnMovRight.style.background = `#2183BA`;
+      btnMovRight.classList.add("bg-[#2183BA]");
+      btnMovRight.classList.remove("bg-[#32B5FF]");
+
+      btnMovRight.classList.remove("shadow-[3px_3px_0_#D7D7D7]")
+      btnMovRight.classList.add("shadow-none")
     }
 
   });
 
   socket.on("detener", () => {
-    btnMovUp.style.background = `#4678FB`;
-    btnMovDown.style.background = `#4678FB`;
-    btnMovLeft.style.background = `#32B5FF`;
-    btnMovRight.style.background = `#32B5FF`;
+    btnMovUp.classList.remove("bg-[#355BBF]");
+    btnMovUp.classList.add("bg-[#4678FB]")
+
+    btnMovDown.classList.remove("bg-[#355BBF]")
+    btnMovDown.classList.add("bg-[#4678FB]")
+
+    btnMovLeft.classList.remove("bg-[#2183BA]");
+    btnMovLeft.classList.add("bg-[#32B5FF]");
+
+    btnMovRight.classList.remove("bg-[#2183BA]");
+    btnMovRight.classList.add("bg-[#32B5FF]");
+
+    //
+
+    btnMovUp.classList.add("shadow-[3px_3px_0_#D7D7D7]")
+    btnMovUp.classList.remove("shadow-none")
+
+    btnMovLeft.classList.add("shadow-[3px_3px_0_#D7D7D7]")
+    btnMovLeft.classList.remove("shadow-none")
+    
+    btnMovDown.classList.add("shadow-[3px_3px_0_#D7D7D7]")
+    btnMovDown.classList.remove("shadow-none")
+
+    btnMovRight.classList.add("shadow-[3px_3px_0_#D7D7D7]")
+    btnMovRight.classList.remove("shadow-none")
 
   });
 
@@ -244,6 +370,63 @@ socket.on("chat message", (msg) => {
       }
     }
   }
+
+
+  // ! CONECTAR CON BLUETOOTH 
+
+  let bluetoothDevice;
+
+  async function connect() {
+    try {
+      // Solicitar permiso para acceder al dispositivo Bluetooth
+      bluetoothDevice = await navigator.bluetooth.requestDevice({
+        filters: [{ services: ['serial'] }] // Filtro para el servicio serial Bluetooth
+      });
+  
+      // Conectar al dispositivo Bluetooth
+      const server = await bluetoothDevice.gatt.connect();
+  
+      // Obtener el servicio serial
+      const service = await server.getPrimaryService('serial');
+  
+      // Obtener la característica para escribir datos
+      const characteristic = await service.getCharacteristic('write');
+  
+      // Función para enviar un comando al Arduino
+      function enviarDireccion(direction) {
+        const encoder = new TextEncoder();
+        characteristic.writeValue(encoder.encode(direction));
+      }
+  
+      // Ejemplo de enviar comandos al Arduino
+      enviarDireccion('up'); // Avanzar
+      enviarDireccion('left');    // Girar a la izquierda
+  
+      // Escuchar datos recibidos del Arduino
+      /*
+      characteristic.addEventListener('characteristicvaluechanged', (event) => {
+        const decoder = new TextDecoder();
+        console.log('Datos recibidos:', decoder.decode(event.target.value));
+      });
+      */
+  
+      // Habilitar notificaciones de la característica para recibir datos
+      //await characteristic.startNotifications();
+
+      btnConectar.classList.add("bg-[#9FDCFF]");
+      btnConectar.classList.remove("hover:bg-slate-100")
+  
+    } catch (error) {
+      console.error('Error al conectar con el dispositivo Bluetooth:', error);
+    }
+  }
+
+  // * Event listener para el botón de conexión
+  const btnConectar = document.getElementById('conectar');
+  if(btnConectar) {
+    btnConectar.addEventListener('click', connect);
+  }
+  
 
 })
 

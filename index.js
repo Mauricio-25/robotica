@@ -78,10 +78,11 @@ io.on('connection', (socket) => {
   });
 
   // ! EVENTOS ARDUINO
-
+  /*
   socket.on('valores_sensores', (valor) => {
     io.emit('valores_sensores', valor);
   });
+  */
   
 });
 
