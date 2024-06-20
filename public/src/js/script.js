@@ -353,6 +353,16 @@ socket.on("chat message", (msg) => {
 
   });
 
+  socket.on("bluetooth", (valor) => {
+    
+    if(valor) {
+      btnConectar.classList.add("bg-[#C6C6C6]");
+    } else {
+      btnConectar.classList.remove("bg-[#C6C6C6]");
+    }
+
+  });
+
   //
 
   function devolverInput(evento) {
@@ -413,8 +423,11 @@ socket.on("chat message", (msg) => {
       // Habilitar notificaciones de la característica para recibir datos
       //await characteristic.startNotifications();
 
-      btnConectar.classList.add("bg-[#9FDCFF]");
-      btnConectar.classList.remove("hover:bg-slate-100")
+      btnConectar.style.background = `#9FDCFF`;
+      btnConectar.classList.remove("cursor-pointer");
+      btnConectar.classList.remove("hover:bg-slate-100");
+
+      socket.emit("bluetooth", true);
   
     } catch (error) {
       console.error('Error al conectar con el dispositivo Bluetooth:', error);

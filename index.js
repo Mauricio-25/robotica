@@ -77,6 +77,13 @@ io.on('connection', (socket) => {
     console.log("Deteniendo carrito");
   });
 
+  // * BOTON BLUETOOTH
+
+  socket.on("bluetooth", (valor) => {
+    io.emit('bluetooth', valor);
+    console.log(`Conexion bluetooth: ${valor}°`);
+  });
+
   // ! EVENTOS ARDUINO
   /*
   socket.on('valores_sensores', (valor) => {
